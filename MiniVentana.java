@@ -9,7 +9,7 @@ public class Ventana extends JFrame{
 	private JButton bSave,bSaveFile,bLoad;
 	private JPanel panelPrincipal;
 	private ListaMiembro listaMiembro;
-	private JLabel lListaMembresia;
+	private JLabel lListaMiembro;
 	private JTextField tNombre,tDireccion,tTelefono,tPos;
 
 	public Ventana(){
@@ -45,8 +45,8 @@ public class Ventana extends JFrame{
 			String telefono= tTelefono.getText();
 			Miembro m= new Miembro(nombre,direccion);
 			int pos= Integer.parseInt(tPos.getText());
-			agenda.addContacto(c,pos);
-			imprimeAgenda();
+			listaMiembro.addContacto(m,pos);
+			imprimeListaMiembro();
 		}
 	}
 
@@ -57,7 +57,7 @@ public class Ventana extends JFrame{
 				String fileName=pane.showInputDialog("¿Cuál es el nombre del archivo?");
 				FileOutputStream fout = new FileOutputStream(fileName);
 				ObjectOutputStream oos = new ObjectOutputStream(fout);
-				oos.writeObject(listaMembresia);
+				oos.writeObject(listaMiembro);
 				oos.close();				
 			}catch(FileNotFoundException ex){
 				ex.printStackTrace();
@@ -77,7 +77,7 @@ public class Ventana extends JFrame{
 				File selectedFile = fileChooser.getSelectedFile();
 				FileInputStream fin = new FileInputStream(selectedFile);
 				ObjectInputStream ois = new ObjectInputStream(fin);
-				listaMembresia= (listaMembresia)ois.readObject();
+				listaMiembro= (listaMiembro)ois.readObject();
 				imprimeListaMembresia();
 			}catch(FileNotFoundException ex){
 				System.out.println("Aun no hay archivo");
@@ -89,17 +89,17 @@ public class Ventana extends JFrame{
 		}
 	}
 
-	public void imprimeListaMembresia(){
-		String listaMembresia="<html>";
-		for(int i=0;i<listaMembresia.getMembresia().length;i++){
+	public void imprimeListaMiembro(){
+		String listaMiembroString="<html>";
+		for(int i=0;i<listaMiembro.getMiembro().length;i++){
 			try{
-				listaMembresiaString= lisaMembresiaString+i+".- "+listaMembresia.getMembresia()[i].getNombre()+" "+listaMembresia.getMembresia()[i].getNombre()+"<br/>";
+				listaMiembroString= lisaMiembroString+i+".- "+listaMiembro.getMiembro()[i].getNombreUsuario()+" "+listaMiembro.getMiembro()[i].getNombreUsuario()+"<br/>";
 			}catch(NullPointerException e){
-				listaMembresiaString=listaMembresiaString+i+".- Vacío <br/>";
+				listaMiembroString=listaMiembroString+i+".- Vacío <br/>";
 			}
 		}
-		listaMembresiaString=agendaString+"</html>";
-		lListaMembresia.setText(listaMembresiaString);
+		listaMiembroString=listaMiembroString+"</html>";
+		lListaMiembro.setText(listaMiembroString);
 	}
 
 }
